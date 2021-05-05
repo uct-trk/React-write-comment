@@ -1,6 +1,7 @@
-import axios from 'axios'
+import {api} from '../api'
 import React, { useEffect, useState } from 'react'
 import WriteComments from './WriteComments'
+import axios from 'axios'
 
 
 const WriteDetail = (props) => {
@@ -21,7 +22,7 @@ const WriteDetail = (props) => {
     const handleCommentSubmit = (event, commentBody) => {
         event.preventDefault();
 
-        axios.post(`https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`, commentBody)
+        api().post(`/posts/${id}/comments`, commentBody)
             .then(response => { setComments([...comments, response.data]) }) //yorumları dataya ekliyoruz
             .catch((error) => { console.log(error) })
     }
@@ -32,8 +33,8 @@ const WriteDetail = (props) => {
     useEffect(() => {
 
         axios.all([
-            axios.get(`https://react-yazi-yorum.herokuapp.com/posts/${id}`),
-            axios.get(`https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`)])
+            api().get(`/posts/${id}`),
+            api().get(`/posts/${id}/comments`)])
             .then(responses => {
                 console.log(responses)
                 setWriteDetail(responses[0].data)

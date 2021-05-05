@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import {api} from '../api'
 import {Link} from 'react-router-dom'
 
 const WriteList = () => {
     const [writeList, setWriteList] = useState([])
 
     useEffect(() => {
-        axios.get("https://react-yazi-yorum.herokuapp.com/posts")
+        api().get("/posts")
             .then((response) => {
                 setWriteList(response.data)
                 console.log(response.data)

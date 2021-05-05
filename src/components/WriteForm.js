@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom' // history geldi
+import { api } from '../api'
 
 const WriteForm = (props) => {
 
@@ -13,7 +13,7 @@ const WriteForm = (props) => {
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        axios.post("https://react-yazi-yorum.herokuapp.com/posts", write)
+        api().post("/posts", write)
             .then(response => { props.history.push("/") })  // yazımız eklendiğinde onu ana sayfaya yönlendiriyoruz
             .catch((err) => { setErr("You have to fill Header and Content") })
         
