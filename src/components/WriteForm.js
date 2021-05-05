@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom' // history geldi
 import { api } from '../api'
 
@@ -13,22 +13,42 @@ const WriteForm = (props) => {
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        api().post("/posts", write)
-            .then(response => { props.history.push("/") })  // yazımız eklendiğinde onu ana sayfaya yönlendiriyoruz
-            .catch((err) => { setErr("You have to fill Header and Content") })
-        
         setErr("")
+
+        if (props.editWrite.title) {
+            // edit işlemi yapılacak put request 
+            console.log("id", props.match.params.id)
+            api()
+                .put(`/posts/${props.match.params.id}`, write)
+                .then((response) => {
+                    console.log(response)
+                    props.history.push(`/posts/${props.match.params.id}`)
+                })
+                .catch((err) => setErr("You have to fill Header and Content"))
+
+        } else {
+            // add işlemi yapılacak
+            api().post("/posts", write)
+                .then(response => { props.history.push("/") })  // yazımız eklendiğinde onu ana sayfaya yönlendiriyoruz
+                .catch((err) => { setErr() })
+        }
     }
+
+    // propstan gelen yazı
+    useEffect(() => {
+        if (props.editWrite.title && props.editWrite.content) setWrite(props.editWrite)
+    }, [props.editWrite])
+
 
     return (
         <>
-        {err && (
-            <div className="ui error message">
-            <div className="header">Error</div>
-            <p>{err}</p>
-        </div>
-        )}
-            
+            {err && (
+                <div className="ui error message">
+                    <div className="header">Error</div>
+                    <p>{err}</p>
+                </div>
+            )}
+
             <div className="ui form">
                 <div className="field">
                     <label>Header</label>

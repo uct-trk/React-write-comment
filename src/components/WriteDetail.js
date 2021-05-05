@@ -1,7 +1,8 @@
-import {api} from '../api'
+import { api } from '../api'
 import React, { useEffect, useState } from 'react'
 import WriteComments from './WriteComments'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 const WriteDetail = (props) => {
@@ -46,8 +47,15 @@ const WriteDetail = (props) => {
 
     return (
         <>
+            <div className="ui grid">
+                <div className="ui buttons" style={{marginLeft:"450px"}}>
+                    <Link to={`/posts/${writeDetail.id}/edit`} className="ui button blue">Edit</Link>
+                    <button className="ui button red">Delete</button>
+                </div>
+            </div>
             <h2 className="ui header">{writeDetail.title}</h2>
             <p>{writeDetail.content}</p>
+
             <p>{writeDetail.created_at}</p>
 
             <WriteComments comments={comments} handleCommentSubmit={handleCommentSubmit} />

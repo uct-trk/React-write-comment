@@ -23,7 +23,7 @@ const CommentForm = (props) => {
                 setCommentBody(COMMENT_INITIAL)
                 }}>
 
-                <div class="ui large icon input">
+                <div className="ui large icon input">
                     <input
                         name="display_name"
                         type="text"
@@ -32,6 +32,7 @@ const CommentForm = (props) => {
                         onChange={handleOnChange} />
                 </div>
                 <textarea
+                    style={{margin:"10px 0", resize:"none"}}
                     name="body"
                     placeholder="Your Comment..."
                     rows="3"
