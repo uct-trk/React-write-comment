@@ -17,7 +17,7 @@ const WriteForm = (props) => {
     const onFormSubmit = (event) => {
         event.preventDefault();
         setErr("")
-
+           // eğer yazı kısmı yoksa daha ileriye gitme
         if (props.editWrite?.title) {
             // edit işlemi yapılacak put request 
             console.log("id", id)
