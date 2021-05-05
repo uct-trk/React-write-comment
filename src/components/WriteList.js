@@ -15,6 +15,8 @@ const WriteList = () => {
 
     return ( 
     <div className="ui relaxed divided list"> 
+    <Link to="/addwrite" className="ui primary button">Add Comment</Link>
+   
     {writeList.map(comment => {
         return (
             <div key={comment.id} className="item">

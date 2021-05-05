@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { withRouter } from 'react-router-dom' // history geldi
+import { useHistory, useParams, withRouter } from 'react-router-dom' // history geldi
 import { api } from '../api'
 
 const WriteForm = (props) => {
 
     const [write, setWrite] = useState({ title: "", content: "" })
     const [err, setErr] = useState("")
+
+    const {id} = useParams()
+    const history = useHistory()
 
     const onInputChange = (event) => {
         setWrite({ ...write, [event.target.name]: event.target.value })
@@ -15,28 +18,28 @@ const WriteForm = (props) => {
         event.preventDefault();
         setErr("")
 
-        if (props.editWrite.title) {
+        if (props.editWrite?.title) {
             // edit işlemi yapılacak put request 
-            console.log("id", props.match.params.id)
+            console.log("id", id)
             api()
-                .put(`/posts/${props.match.params.id}`, write)
+                .put(`/posts/${id}`, write)
                 .then((response) => {
                     console.log(response)
-                    props.history.push(`/posts/${props.match.params.id}`)
+                    history.push(`/posts/${id}`)
                 })
                 .catch((err) => setErr("You have to fill Header and Content"))
 
         } else {
             // add işlemi yapılacak
             api().post("/posts", write)
-                .then(response => { props.history.push("/") })  // yazımız eklendiğinde onu ana sayfaya yönlendiriyoruz
+                .then(response => { history.push("/") })  // yazımız eklendiğinde onu ana sayfaya yönlendiriyoruz
                 .catch((err) => { setErr() })
         }
     }
 
     // propstan gelen yazı
     useEffect(() => {
-        if (props.editWrite.title && props.editWrite.content) setWrite(props.editWrite)
+        if (props.editWrite?.title && props.editWrite?.content){setWrite(props.editWrite)} 
     }, [props.editWrite])
 
 
@@ -66,4 +69,8 @@ const WriteForm = (props) => {
     )
 }
 
-export default withRouter(WriteForm)
+export default WriteForm
+
+// useParams ve useHistory kullandık withRouter e gerek kalmadı
+// withRoter kullanmamızın sebebi;
+// App.js içinde route olan componentlerden olmadığı için burada boyle bir yöntem kullandık

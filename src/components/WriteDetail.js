@@ -2,11 +2,11 @@ import { api } from '../api'
 import React, { useEffect, useState } from 'react'
 import WriteComments from './WriteComments'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import DeleteModal from './DeleteModal'
 
 
-const WriteDetail = (props) => {
+const WriteDetail = () => {
 
 
     //yazı detayları useState si
@@ -16,8 +16,10 @@ const WriteDetail = (props) => {
     const [comments, setComments] = useState([])
 
     // destructuring
-    const { id } = props.match.params
-
+    /* const { id } = props.match.params */
+    const {id} = useParams() // üsttekinin aynısı 
+    
+    const history = useHistory()
 
 
     // yazılan yorumları apı ye gönderiyoruz, veri tabanına obje içerisindeki isimler ile kayıt olur
@@ -51,7 +53,7 @@ const WriteDetail = (props) => {
             <div className="ui grid">
                 <div className="ui buttons" style={{marginLeft:"450px"}}>
                     <Link to={`/posts/${writeDetail.id}/edit`} className="ui button blue">Edit</Link>
-                    <DeleteModal writeDetail={writeDetail} push={props.history.push}/>
+                    <DeleteModal writeDetail={writeDetail} push={history.push}/>
                 </div>
             </div>
             <h2 className="ui header">{writeDetail.title}</h2>

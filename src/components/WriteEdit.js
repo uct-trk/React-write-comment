@@ -10,7 +10,7 @@ const WriteEdit = (props) => {
 
     useEffect(() => {
         api().get(`/posts/${id}`)
-        .then(response => {setEditWrite({ title: response.data.title, content: response.data.content})})
+        .then((response) => {setEditWrite({ title: response.data.title, content: response.data.content})})
     }, [])
 
     return (
