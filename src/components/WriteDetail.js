@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import WriteComments from './WriteComments'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import DeleteModal from './DeleteModal'
 
 
 const WriteDetail = (props) => {
@@ -50,7 +51,7 @@ const WriteDetail = (props) => {
             <div className="ui grid">
                 <div className="ui buttons" style={{marginLeft:"450px"}}>
                     <Link to={`/posts/${writeDetail.id}/edit`} className="ui button blue">Edit</Link>
-                    <button className="ui button red">Delete</button>
+                    <DeleteModal writeDetail={writeDetail} push={props.history.push}/>
                 </div>
             </div>
             <h2 className="ui header">{writeDetail.title}</h2>
